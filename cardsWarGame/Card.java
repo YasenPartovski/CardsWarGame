@@ -2,12 +2,12 @@ package task2_CardsWarGame;
 
 public class Card {
 
-	private String[] ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
-	private String[] suits = {"♣", "♦", "♥", "♠"};
+	private String[] ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"}; // Reference for the possible card ranks
+	private String[] suits = {"♣", "♦", "♥", "♠"}; // Reference for the possible card suits
+	private String rank; // The card's rank
+	private String suit; // The card's suit
 	
-	private String rank;
-	private String suit;
-	
+	// Constructors:
 	public Card (String rank, String suit) {
 		for (int i = 0; i < ranks.length; i++) {
 			for (int j = 0; j < suits.length; j++) {
@@ -23,6 +23,15 @@ public class Card {
 			}
 		}
 	}
+	
+	// Setters & Getters:
+	public String[] getRanks() {
+		String[] tempRanks = new String[13];
+		for (int i = 0; i < this.ranks.length; i++) {
+			tempRanks[i]=this.ranks[i];
+		}
+		return tempRanks; // Returns a duplicate of the original String array
+	}
 
 	public String getRank() {
 		return this.rank;
@@ -32,12 +41,10 @@ public class Card {
 		return this.suit;
 	}
 	
+	// Methods:
 	public void showCard() {
-		System.out.print(this.getRank()+this.getSuit()); // Prints the rank and suit of the card
+		if (this!=null) {
+			System.out.print(this.getRank()+this.getSuit()); // Prints the rank and suit of the card
+		}
 	}
-	
-//	public void compareCards(Card card1, Card card2) { // Compares the ranks of the cards (war between two cards)
-//		gfdg
-//	}
-
 }

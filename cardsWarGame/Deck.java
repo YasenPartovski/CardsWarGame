@@ -5,12 +5,11 @@ import java.util.Random;
 
 public class Deck {
 
-	
-	private String[] rank = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
-	private String[] suit = {"♣", "♦", "♥", "♠"};
-	
+	private String[] rank = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"}; // Reference for the possible card ranks
+	private String[] suit = {"♣", "♦", "♥", "♠"}; // Reference for the possible card suits
 	private ArrayList<Card> deck;
 	
+	// Constructors:
 	public Deck() { // The default sorted deck
 		this.deck=new ArrayList<Card>();
 		for (int i = 0; i < rank.length; i++) {
@@ -28,15 +27,12 @@ public class Deck {
 		
 	}
 
+	// Setters & Getters:
 	public ArrayList<Card> getDeck() {
-		ArrayList<Card> tempDeck = new ArrayList<Card>(); // A temporary ArrayList to return as a result
-		for (int i = 0; i < this.deck.size(); i++) {
-			tempDeck.add(this.deck.get(i)); // Duplicating the ArrayList
-		}
-		return tempDeck; // Returning the duplicate so that the original remains the same
+		return this.deck;
 	}
 
-
+	// Methods:
 	public void shuffle() { // Shuffles the deck
 		ArrayList<Card> tempDeck = new ArrayList<Card>();
 		while (!this.deck.isEmpty()) {
@@ -63,5 +59,4 @@ public class Deck {
 			this.deck.clear(); // The main deck is cleared (there are no cards in it anymore)
 		}
 	}
-	
 }
