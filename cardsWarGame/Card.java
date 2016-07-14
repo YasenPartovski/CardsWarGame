@@ -24,8 +24,8 @@ public class Card {
 		}
 	}
 	
-	// Setters & Getters:
-	public String[] getRanks() {
+	// Getters:
+	public String[] getRanks() { // Returns a String array with all the sorted ranks for reference
 		String[] tempRanks = new String[13];
 		for (int i = 0; i < this.ranks.length; i++) {
 			tempRanks[i]=this.ranks[i];

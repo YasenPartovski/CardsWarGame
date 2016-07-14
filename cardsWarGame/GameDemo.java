@@ -49,15 +49,20 @@ public class GameDemo {
 	
 		sc.close();
 		
-		// Creates the two players:
-		Player player1 = new Player(namePlayer1);
-		Player player2 = new Player(namePlayer2);
-		
 		// Creates the Deck:
 		Deck deck = new Deck(); // New Deck (sorted and containing all 52 cards)
 		deck.shuffle(); // Shuffles the deck
-		deck.deal(player1, player2); // Deals the cards to the two players
 		
+		ArrayList<Card> handPlayer1=new ArrayList<Card>(); // Player 1's hand (cards in hand)
+		ArrayList<Card> handPlayer2=new ArrayList<Card>(); // Player 2's hand (cards in hand)
+		
+		deal(deck.getDeck(), handPlayer1, handPlayer2); // Divides the cards in two stacks for the two players
+		deck.clearDeck(); // Clears the deck (there have to be no cards left in it)
+		
+		// Creates the two players and deals them their cards:
+		Player player1=new Player(namePlayer1, handPlayer1);
+		Player player2=new Player(namePlayer2, handPlayer2);
+	
 		// Game: ..........................................
 		while (true) {
 			// Prints the stats for the game: ..............
@@ -69,10 +74,10 @@ public class GameDemo {
 			// Prints decks:
 			
 			// Player 1:
-			player1.getDeck().getDeck().get(0).showCard();
+			player1.getHand().get(0).showCard();
 			System.out.print(" vs. ");
 			// Player 2:
-			player2.getDeck().getDeck().get(0).showCard();
+			player2.getHand().get(0).showCard();
 			System.out.println(" ]]\n");
 			System.out.println("**************************************************************************************************************************************");
 			
@@ -80,7 +85,7 @@ public class GameDemo {
 			player1.battle(player2, player1.putOneCard(), player2.putOneCard(), new ArrayList<Card>(), 1);
 	
 			// If the two players' decks are played (no cards in either one of them): ..............
-			if (player1.getDeck().getDeck().size()==0 && player2.getDeck().getDeck().size()==0) { // No more cards in decks
+			if (player1.getHand().size()==0 && player2.getHand().size()==0) { // No more cards in decks
 				if (player1.getCardsWon().size()>player2.getCardsWon().size()) { // If the first player won more cards
 					printCardsWonFinal(player1, player2); // Printing the final stats (cards won)
 					player1.assignAsWinner(); // Player 1 becomes the winner!!!
@@ -102,6 +107,7 @@ public class GameDemo {
 			}
 		}
 	}
+	
 	static void printStatsForGame(Player player1, Player player2) {
 		System.out.println("\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Stats for the two players <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
 		// Cards Won: 
@@ -116,18 +122,18 @@ public class GameDemo {
 		System.out.println("\n\n--------------------------------------------------------------- Decks: ---------------------------------------------------------------\n");
 		// Player 1:
 		System.out.print(player1.getName()+": "); // Prints the player's name
-		for (int i = 0; i < player1.getDeck().getDeck().size(); i++) { // Prints Player1's deck
-			player1.getDeck().getDeck().get(i).showCard();
-			if (i!=player1.getDeck().getDeck().size()-1) { // The ", " will not appear after the last element
+		for (int i = 0; i < player1.getHand().size(); i++) { // Prints Player1's deck
+			player1.getHand().get(i).showCard();
+			if (i!=player1.getHand().size()-1) { // The ", " will not appear after the last element
 				System.out.print(", ");
 			}
 		}
 		// Player 2:
 		System.out.println("\n====================");
 		System.out.print(player2.getName()+": "); // Prints the player's name
-		for (int i = 0; i < player2.getDeck().getDeck().size(); i++) { // Prints Player2's deck
-			player2.getDeck().getDeck().get(i).showCard();
-			if (i!=player2.getDeck().getDeck().size()-1) { // The ", " will not appear after the last element
+		for (int i = 0; i < player2.getHand().size(); i++) { // Prints Player2's deck
+			player2.getHand().get(i).showCard();
+			if (i!=player2.getHand().size()-1) { // The ", " will not appear after the last element
 				System.out.print(", ");
 			}
 		}
@@ -141,5 +147,18 @@ public class GameDemo {
 		System.out.println();
 		// Player 2:
 		player2.printCardsWon();
+	}
+	
+	static void deal(ArrayList<Card> deck, ArrayList<Card> handPlayer1, ArrayList<Card> handPlayer2) { 
+		if (deck!=null && !(deck.isEmpty()) && handPlayer1!=null &&  handPlayer2!=null) { // If the deck and the players exist, and the deck is not empty
+			for (int i = 0; i < deck.size(); i++) {
+				if (i%2==0) { // deals the even cards to player 1
+					handPlayer1.add(deck.get(i));
+				}
+				else { // deals the odd cards to player 2
+					handPlayer2.add(deck.get(i));
+				}
+			}
+		}	
 	}
 }
